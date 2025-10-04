@@ -14,6 +14,7 @@ const trainType = document.getElementById('trainType');
 const currentLocation = document.getElementById('currentLocation');
 const delay = document.getElementById('delay');
 const routeTable = document.getElementById('routeTable');
+const trainStats = document.getElementById('trainStats');
 
 // Set default date to today
 document.getElementById('journeyDate').value = new Date().toISOString().split('T')[0];
@@ -67,40 +68,46 @@ function hideLoading() {
 }
 
 function displayResults(data) {
+    console.log('Displaying results:', data);
+    
     // Display train information
     trainName.textContent = `${data.train.trainNumber} - ${data.train.trainName}`;
     trainRoute.textContent = `${data.train.sourceStationName} → ${data.train.destinationStationName}`;
-    trainType.textContent = data.train.type;
+    trainType.textContent = `${data.train.type} • Zone: ${data.train.zone} • Distance: ${data.train.distanceKm}km`;
     
-    // Display current status
-    if (data.currentStation) {
+    // Display current status from live data or general status
+    if (data.liveData && data.liveData.currentLocation) {
+        const currentLoc = data.liveData.currentLocation;
         currentLocation.innerHTML = `
-            <strong>Current Location:</strong> ${data.currentStation.stationName} (${data.currentStation.stationCode})
+            <strong>Current Location:</strong> ${currentLoc.stationCode} - ${currentLoc.status}
+            <br><small>Distance from origin: ${currentLoc.distanceFromOriginKm}km</small>
         `;
         
-        // Display delay information
-        const delayMinutes = data.currentStation.delayMinutes || 0;
-        if (delayMinutes === 0) {
-            delay.innerHTML = '<span class="on-time">✅ On Time</span>';
-            delay.className = 'delay on-time';
-        } else {
-            delay.innerHTML = `<span class="delayed">⏰ Delayed by ${delayMinutes} minutes</span>`;
-            delay.className = 'delay delayed';
-        }
+        // No direct delay info in live data, so show status
+        delay.innerHTML = `<span class="status-info">📍 ${currentLoc.status}</span>`;
+        delay.className = 'delay';
     } else {
-        currentLocation.innerHTML = '<strong>Status:</strong> Information not available';
-        delay.innerHTML = '';
+        currentLocation.innerHTML = `<strong>Status:</strong> ${data.statusSummary || 'Live status available'}`;
+        if (data.metadata && data.metadata.lastLiveUpdate) {
+            const updateTime = new Date(data.metadata.lastLiveUpdate).toLocaleString();
+            delay.innerHTML = `<small>Last updated: ${updateTime}</small>`;
+        } else {
+            delay.innerHTML = '';
+        }
     }
     
+    // Display train statistics
+    displayTrainStats(data.train);
+    
     // Display route information
-    displayRouteTable(data.routeInfo, data.currentStation);
+    displayRouteTable(data.route, data.liveData);
     
     // Show results
     results.classList.remove('hidden');
     results.scrollIntoView({ behavior: 'smooth' });
 }
 
-function displayRouteTable(routeInfo, currentStation) {
+function displayRouteTable(routeInfo, liveData) {
     if (!routeInfo || routeInfo.length === 0) {
         routeTable.innerHTML = '<p>Route information not available</p>';
         return;
@@ -118,20 +125,35 @@ function displayRouteTable(routeInfo, currentStation) {
         <div class="time">Arrival</div>
         <div class="time">Departure</div>
         <div class="platform">Platform</div>
+        <div class="status">Status</div>
     `;
     
     routeTable.innerHTML = '';
     routeTable.appendChild(header);
+    
+    // Get live route data if available
+    const liveRoute = liveData && liveData.route ? liveData.route : [];
     
     // Add route items
     routeInfo.forEach((station, index) => {
         const item = document.createElement('div');
         item.className = 'route-item';
         
-        // Determine if this is the current station
-        const isCurrent = currentStation && 
-            (station.stationCode === currentStation.stationCode || 
-             station.stationName === currentStation.stationName);
+        // Find corresponding live data for this station
+        const liveStationData = liveRoute.find(lr => lr.station.code === station.stationCode);
+        
+        // Determine if this is the current station (from live data)
+        let isCurrent = false;
+        let stationStatus = 'upcoming';
+        
+        if (liveStationData) {
+            if (liveStationData.actualArrival && !liveStationData.actualDeparture) {
+                isCurrent = true;
+                stationStatus = 'current';
+            } else if (liveStationData.actualDeparture) {
+                stationStatus = 'completed';
+            }
+        }
         
         if (isCurrent) {
             item.classList.add('current');
@@ -146,16 +168,68 @@ function displayRouteTable(routeInfo, currentStation) {
             formatTime(station.scheduledDeparture) : 
             (index === routeInfo.length - 1 ? 'End' : '--');
         
+        // Show actual times if available
+        let displayArrival = arrivalTime;
+        let displayDeparture = departureTime;
+        
+        if (liveStationData) {
+            if (liveStationData.actualArrival) {
+                const actualArr = new Date(liveStationData.actualArrival).toLocaleTimeString('en-IN', {hour: '2-digit', minute: '2-digit'});
+                displayArrival = `${arrivalTime}<br><small class="actual-time">Act: ${actualArr}</small>`;
+            }
+            if (liveStationData.actualDeparture) {
+                const actualDep = new Date(liveStationData.actualDeparture).toLocaleTimeString('en-IN', {hour: '2-digit', minute: '2-digit'});
+                displayDeparture = `${departureTime}<br><small class="actual-time">Act: ${actualDep}</small>`;
+            }
+        }
+        
+        // Status display
+        let statusHtml = `<span class="status ${stationStatus}">${stationStatus.toUpperCase()}</span>`;
+        if (liveStationData && (liveStationData.delayArrivalMinutes || liveStationData.delayDepartureMinutes)) {
+            const delay = liveStationData.delayArrivalMinutes || liveStationData.delayDepartureMinutes;
+            statusHtml += `<br><small class="delay-info">+${delay}min</small>`;
+        }
+        
         item.innerHTML = `
             <div class="station-code">${station.stationCode}</div>
             <div class="station-name">${station.stationName}</div>
-            <div class="time">${arrivalTime}</div>
-            <div class="time">${departureTime}</div>
+            <div class="time">${displayArrival}</div>
+            <div class="time">${displayDeparture}</div>
             <div class="platform">${station.platform || '--'}</div>
+            <div class="status-cell">${statusHtml}</div>
         `;
         
         routeTable.appendChild(item);
     });
+}
+
+function displayTrainStats(train) {
+    const stats = [
+        { label: 'Travel Time', value: formatDuration(train.travelTimeMinutes) },
+        { label: 'Total Distance', value: `${train.distanceKm} km` },
+        { label: 'Average Speed', value: `${train.avgSpeedKmph} km/h` },
+        { label: 'Total Halts', value: train.totalHalts },
+        { label: 'Return Train', value: train.returnTrainNumber },
+        { label: 'Zone', value: train.zone }
+    ];
+    
+    trainStats.innerHTML = '';
+    stats.forEach(stat => {
+        const statItem = document.createElement('div');
+        statItem.className = 'stat-item';
+        statItem.innerHTML = `
+            <div class="stat-label">${stat.label}</div>
+            <div class="stat-value">${stat.value}</div>
+        `;
+        trainStats.appendChild(statItem);
+    });
+}
+
+function formatDuration(minutes) {
+    if (!minutes) return '--';
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    return `${hours}h ${mins}m`;
 }
 
 function formatTime(minutes) {

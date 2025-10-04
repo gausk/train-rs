@@ -193,6 +193,45 @@ button:disabled {
     font-size: 1.3rem;
 }
 
+.train-stats {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+}
+
+.train-stats h3 {
+    color: #667eea;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.stat-item {
+    background: white;
+    padding: 12px 16px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+.stat-value {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+}
+
 .route-table {
     display: grid;
     gap: 10px;
@@ -200,13 +239,14 @@ button:disabled {
 
 .route-item {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
-    gap: 15px;
-    padding: 15px;
+    grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr;
+    gap: 10px;
+    padding: 12px;
     background: #f8f9fa;
     border-radius: 8px;
     align-items: center;
     transition: background-color 0.2s ease;
+    font-size: 0.9rem;
 }
 
 .route-item:hover {
@@ -260,6 +300,25 @@ button:disabled {
     color: #721c24;
 }
 
+.status-cell {
+    text-align: center;
+}
+
+.actual-time {
+    color: #28a745;
+    font-weight: 600;
+}
+
+.delay-info {
+    color: #dc3545;
+    font-weight: 600;
+}
+
+.status-info {
+    color: #17a2b8;
+    font-weight: 500;
+}
+
 .error {
     background: white;
     border-radius: 15px;
@@ -303,52 +362,140 @@ footer {
 /* Responsive Design */
 @media (max-width: 768px) {
     .container {
-        padding: 15px;
+        padding: 10px;
     }
     
     header h1 {
-        font-size: 2rem;
+        font-size: 2.2rem;
     }
     
     .form-section,
     .results,
     .error {
         margin-bottom: 20px;
+        padding: 20px;
     }
     
     .train-details {
         flex-direction: column;
         gap: 10px;
+        font-size: 0.9rem;
     }
     
     .route-item {
         grid-template-columns: 1fr;
-        gap: 8px;
-        text-align: center;
+        gap: 12px;
+        padding: 16px;
+        font-size: 0.85rem;
     }
     
     .route-item > div {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        padding: 4px 0;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .route-item > div:last-child {
+        border-bottom: none;
+    }
+    
+    .route-item > div::before {
+        content: attr(class) ": ";
+        font-weight: 600;
+        text-transform: capitalize;
+        color: #667eea;
+    }
+    
+    .station-code::before { content: "Code: "; }
+    .station-name::before { content: "Station: "; }
+    .time:nth-of-type(3)::before { content: "Arrival: "; }
+    .time:nth-of-type(4)::before { content: "Departure: "; }
+    .platform::before { content: "Platform: "; }
+    .status-cell::before { content: "Status: "; }
+    
+    /* Mobile-specific improvements */
+    input[type="text"],
+    input[type="date"] {
+        font-size: 16px; /* Prevents zoom on iOS */
+        padding: 14px 16px;
+    }
+    
+    button {
+        padding: 16px;
+        font-size: 17px;
+        border-radius: 12px;
+    }
+    
+    .current-status {
+        padding: 16px;
+        border-radius: 12px;
     }
 }
 
 @media (max-width: 480px) {
+    header {
+        margin-bottom: 30px;
+    }
+    
     header h1 {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
+    }
+    
+    header p {
+        font-size: 1rem;
     }
     
     .form-section,
     .status-section {
-        padding: 20px;
+        padding: 16px;
     }
     
     .train-info {
-        padding: 20px;
+        padding: 20px 16px;
     }
     
     .train-info h2 {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
+        line-height: 1.3;
+    }
+    
+    .route-item {
+        padding: 12px;
+        gap: 10px;
+    }
+    
+    .input-group {
+        margin-bottom: 16px;
+    }
+    
+    label {
+        font-size: 0.95rem;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    
+    .stat-item {
+        padding: 10px 12px;
+    }
+    
+    .train-stats {
+        padding: 16px;
+    }
+}
+
+/* Touch-friendly improvements */
+@media (hover: none) {
+    .route-item:hover {
+        background: #f8f9fa;
+    }
+    
+    button:hover {
+        transform: none;
+        box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
     }
 }
