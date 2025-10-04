@@ -1,0 +1,8 @@
+{
+  "success": false,
+  "error": {
+    "code": "AUTH_FAILED",
+    "message": "Invalid or expired API key",
+    "timestamp": "2025-10-04T20:43:13.329Z"
+  }
+}

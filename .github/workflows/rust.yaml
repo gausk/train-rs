@@ -1,0 +1,28 @@
+name: Rust
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check formatting
+        run: cargo fmt --check
+      - name: Lint with clippy
+        run: cargo clippy -- -D warnings
+      - name: Build
+        run: cargo build --verbose --release
+      - name: Run tests
+        env:
+          RAIL_RADAR_API_KEY: ${{ secrets.RAIL_RADAR_API_KEY }}
+        run: cargo test --verbose --release -- --nocapture

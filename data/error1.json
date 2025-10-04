@@ -1,0 +1,25 @@
+{
+  "success": false,
+  "error": {
+    "code": "API:DATA_NOT_AVAILABLE",
+    "message": "No data found for the requested resource.",
+    "context": {
+      "timestamp": "2025-10-04T18:58:56.030Z",
+      "traceId": "0037ba42-2658-4060-8244-dbaebd38cfa3",
+      "service": "ExternalServices",
+      "method": "getLiveTrainStatus",
+      "metadata": {
+        "trainNumber": "06595",
+        "journeyDate": "2025-10-02"
+      }
+    },
+    "statusCode": 404,
+    "retryable": false
+  },
+  "meta": {
+    "timestamp": "2025-10-04T18:58:56.030Z",
+    "traceId": "0037ba42-2658-4060-8244-dbaebd38cfa3",
+    "service": "ExternalServices",
+    "method": "getLiveTrainStatus"
+  }
+}
