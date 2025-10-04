@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Train Status Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚄 Train Status Tracker</h1>
+            <p>Get real-time status of Indian trains</p>
+        </header>
+
+        <div class="form-section">
+            <form id="trainForm">
+                <div class="input-group">
+                    <label for="trainNumber">Train Number</label>
+                    <input 
+                        type="text" 
+                        id="trainNumber" 
+                        name="train_number" 
+                        placeholder="e.g., 12301" 
+                        required
+                        pattern="[0-9]{4,5}"
+                        title="Please enter a valid train number (4-5 digits)"
+                    >
+                </div>
+                
+                <div class="input-group">
+                    <label for="journeyDate">Journey Date</label>
+                    <input 
+                        type="date" 
+                        id="journeyDate" 
+                        name="journey_date" 
+                        required
+                    >
+                </div>
+                
+                <button type="submit" id="submitBtn">
+                    <span id="submitText">Get Train Status</span>
+                    <div id="spinner" class="spinner hidden"></div>
+                </button>
+            </form>
+        </div>
+
+        <div id="results" class="results hidden">
+            <div class="train-info">
+                <h2 id="trainName"></h2>
+                <div class="train-details">
+                    <span id="trainRoute"></span>
+                    <span id="trainType"></span>
+                </div>
+            </div>
+
+            <div class="status-section">
+                <div class="current-status">
+                    <h3>Current Status</h3>
+                    <div id="currentLocation"></div>
+                    <div id="delay"></div>
+                </div>
+
+                <div class="route-info">
+                    <h3>Route Information</h3>
+                    <div id="routeTable"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="error" class="error hidden">
+            <div class="error-content">
+                <h3>⚠️ Error</h3>
+                <p id="errorMessage"></p>
+                <button onclick="clearError()" class="error-close">Try Again</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Data provided by RailRadar API</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
