@@ -319,6 +319,66 @@ button:disabled {
     font-weight: 500;
 }
 
+.status.departed {
+    background: #28a745;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+
+.departed-time {
+    color: #28a745;
+    font-weight: 600;
+}
+
+.delay-late {
+    color: #dc3545;
+    font-weight: 600;
+}
+
+.delay-early {
+    color: #28a745;
+    font-weight: 600;
+}
+
+.delay-ontime {
+    color: #28a745;
+    font-weight: 600;
+}
+
+.scheduled-time {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.actual-time-cell {
+    font-weight: 600;
+}
+
+.actual-time {
+    color: #0066cc;
+    font-weight: 600;
+}
+
+.no-data {
+    color: #888;
+    font-style: italic;
+    font-size: 0.85rem;
+}
+
+.no-live-data {
+    color: #888;
+    font-size: 0.75rem;
+    font-style: italic;
+}
+
+.status.scheduled {
+    background: #f8f9fa;
+    color: #6c757d;
+    border: 1px solid #dee2e6;
+}
+
 .error {
     background: white;
     border-radius: 15px;
@@ -410,8 +470,8 @@ footer {
     
     .station-code::before { content: "Code: "; }
     .station-name::before { content: "Station: "; }
-    .time:nth-of-type(3)::before { content: "Arrival: "; }
-    .time:nth-of-type(4)::before { content: "Departure: "; }
+    .scheduled-time::before { content: "Scheduled: "; }
+    .actual-time-cell::before { content: "Actual: "; }
     .platform::before { content: "Platform: "; }
     .status-cell::before { content: "Status: "; }
     
