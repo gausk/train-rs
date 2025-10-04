@@ -116,14 +116,14 @@ pub struct TrainStatusResponse {
 #[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub enum TrainStatusResult {
-    Data(TrainStatusData),
+    Data(Box<TrainStatusData>),
     Error(TrainError),
 }
 
 impl From<TrainStatusResponse> for TrainStatusResult {
     fn from(status: TrainStatusResponse) -> Self {
         if status.success {
-            TrainStatusResult::Data(status.data.unwrap())
+            TrainStatusResult::Data(Box::new(status.data.unwrap()))
         } else {
             TrainStatusResult::Error(status.error.unwrap())
         }

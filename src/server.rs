@@ -32,15 +32,15 @@ pub async fn train_live_status(
         .await
         .map_err(|e| Json(e.to_string()))?;
     match result {
-        TrainStatusResult::Data(data) => Ok(Json(data)),
+        TrainStatusResult::Data(data) => Ok(Json(*data)),
         TrainStatusResult::Error(e) => Err(Json(e.message)),
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use tracing::info;
     use super::*;
+    use tracing::info;
 
     #[tokio::test]
     async fn test_get_train_status() {
