@@ -29,7 +29,10 @@ pub async fn get_train_status(params: TrainStatusQuery) -> Result<TrainStatusRes
 pub async fn train_live_status(
     Query(params): Query<TrainStatusQuery>,
 ) -> Result<Json<TrainLiveStatus>, (StatusCode, Json<String>)> {
-    info!("Fetching train status for {} on date {}", params.journey_date, params.journey_date);
+    info!(
+        "Fetching train status for {} on date {}",
+        params.journey_date, params.journey_date
+    );
     let result = get_train_status(params)
         .await
         .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(e.to_string())))?;
