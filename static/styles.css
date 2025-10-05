@@ -149,6 +149,12 @@ button:disabled {
     opacity: 0.9;
 }
 
+.train-details span {
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
 .status-section {
     padding: 30px;
 }
