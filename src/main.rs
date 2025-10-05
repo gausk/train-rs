@@ -30,6 +30,6 @@ async fn main() {
         .layer(ServiceBuilder::new().layer(cors));
 
     let listener = TcpListener::bind("0.0.0.0:3000").await.unwrap();
-    println!("DNS Resolver server running on http://localhost:3000");
+    println!("Started server running on http://localhost:3000");
     serve(listener, app).await.unwrap();
 }

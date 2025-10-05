@@ -1,4 +1,4 @@
-use crate::model::{TrainStatusData, TrainStatusResponse, TrainStatusResult};
+use crate::model::{TrainLiveStatus, TrainStatusResponse, TrainStatusResult};
 use anyhow::Error;
 use axum::Json;
 use axum::extract::Query;
@@ -20,14 +20,13 @@ pub async fn get_train_status(params: TrainStatusQuery) -> Result<TrainStatusRes
     let api_key = std::env::var("RAIL_RADAR_API_KEY").unwrap();
     let response = client.get(&url).header("X-Api-Key", api_key).send().await?;
     let txt = response.text().await?;
-    println!("{}", txt);
     let train_resp: TrainStatusResponse = serde_json::from_str(&txt)?;
     Ok(train_resp.into())
 }
 
 pub async fn train_live_status(
     Query(params): Query<TrainStatusQuery>,
-) -> Result<Json<TrainStatusData>, Json<String>> {
+) -> Result<Json<TrainLiveStatus>, Json<String>> {
     let result = get_train_status(params)
         .await
         .map_err(|e| Json(e.to_string()))?;

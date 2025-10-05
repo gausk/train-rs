@@ -5883,30 +5883,30 @@
       "lastStaticUpdate": "1752463865.729",
       "canRefreshLive": true,
       "journeyStatus": {
-        "journeyDate": "2025-10-02",
-        "currentDate": "2025-10-05",
-        "status": "ARRIVED",
+        "journeyDate": "2025-10-04",
+        "currentDate": "2025-10-04",
+        "status": "RUNNING",
         "canFetchLiveData": true,
-        "startTime": "2025-10-02T16:50:00.000Z",
-        "endTime": "2025-10-03T10:05:00.000Z",
+        "startTime": "2025-10-04T16:50:00.000Z",
+        "endTime": "2025-10-05T10:05:00.000Z",
         "estimatedDepartureTime": "10:20 pm",
         "estimatedArrivalTime": "03:35 pm"
       },
-      "lastLiveUpdate": "2025-10-03T05:19:04.000Z"
+      "lastLiveUpdate": "2025-10-04T21:10:50.000Z"
     },
     "liveData": {
       "trainNumber": "12301",
-      "journeyDate": "2025-10-02",
-      "lastUpdatedAt": "2025-10-03T05:19:04.000Z",
+      "journeyDate": "2025-10-04",
+      "lastUpdatedAt": "2025-10-04T21:10:50.000Z",
       "currentLocation": {
-        "latitude": 28.642578,
-        "longitude": 77.2214,
-        "stationCode": "NDLS",
-        "status": "AT_STATION",
-        "distanceFromOriginKm": 1449.4000244140625,
-        "distanceFromLastStationKm": 0
+        "latitude": 25.27344,
+        "longitude": 81.97625,
+        "stationCode": "BEP",
+        "status": "DEPARTED",
+        "distanceFromOriginKm": 789.1875386716395,
+        "distanceFromLastStationKm": 1.5875630857019587
       },
-      "overallDelayMinutes": 38,
+      "overallDelayMinutes": 18,
       "dataSource": "OFFICIAL",
       "statusSummary": "Live status available",
       "route": [
@@ -5914,104 +5914,118 @@
           "station": {
             "code": "HWH"
           },
-          "scheduledArrival": 1759404000,
-          "scheduledDeparture": 1759404000,
+          "scheduledArrival": 1759576800,
+          "scheduledDeparture": 1759576800,
           "platform": "9"
         },
         {
           "station": {
             "code": "ASN"
           },
-          "scheduledArrival": 1759411020,
-          "scheduledDeparture": 1759411140,
-          "actualArrival": 1759411678,
-          "actualDeparture": 1759412154,
-          "delayArrivalMinutes": 11,
-          "delayDepartureMinutes": 17,
-          "platform": "4"
+          "scheduledArrival": 1759583820,
+          "scheduledDeparture": 1759583940,
+          "actualArrival": 1759584511,
+          "actualDeparture": 1759585035,
+          "delayArrivalMinutes": 12,
+          "delayDepartureMinutes": 18,
+          "platform": "3"
         },
         {
           "station": {
             "code": "DHN"
           },
-          "scheduledArrival": 1759415100,
-          "scheduledDeparture": 1759415400,
-          "actualArrival": 1759414820,
-          "actualDeparture": 1759415678,
-          "delayDepartureMinutes": 5,
+          "scheduledArrival": 1759587900,
+          "scheduledDeparture": 1759588200,
+          "actualArrival": 1759588053,
+          "actualDeparture": 1759588619,
+          "delayArrivalMinutes": 3,
+          "delayDepartureMinutes": 7,
           "platform": "3"
         },
         {
           "station": {
             "code": "PNME"
           },
-          "scheduledArrival": 1759417200,
-          "scheduledDeparture": 1759417320,
-          "actualArrival": 1759417606,
-          "actualDeparture": 1759417891,
-          "delayArrivalMinutes": 7,
-          "delayDepartureMinutes": 10,
+          "scheduledArrival": 1759590000,
+          "scheduledDeparture": 1759590120,
+          "actualArrival": 1759590319,
+          "actualDeparture": 1759590621,
+          "delayArrivalMinutes": 5,
+          "delayDepartureMinutes": 8,
           "platform": "3"
         },
         {
           "station": {
             "code": "GAYA"
           },
-          "scheduledArrival": 1759424520,
-          "scheduledDeparture": 1759424700,
-          "actualArrival": 1759423968,
-          "actualDeparture": 1759425529,
-          "delayDepartureMinutes": 14
+          "scheduledArrival": 1759597320,
+          "scheduledDeparture": 1759597500,
+          "actualArrival": 1759597384,
+          "actualDeparture": 1759597919,
+          "delayArrivalMinutes": 1,
+          "delayDepartureMinutes": 7,
+          "platform": "1"
         },
         {
           "station": {
             "code": "DDU"
           },
-          "scheduledArrival": 1759432200,
-          "scheduledDeparture": 1759432800,
-          "actualArrival": 1759433484,
-          "delayArrivalMinutes": 21,
+          "scheduledArrival": 1759605000,
+          "scheduledDeparture": 1759605600,
+          "actualArrival": 1759605884,
+          "delayArrivalMinutes": 15,
           "platform": "7"
+        },
+        {
+          "station": {
+            "code": "BEP"
+          },
+          "scheduledArrival": 1759611120,
+          "scheduledDeparture": 1759611120,
+          "actualArrival": 1759612192,
+          "actualDeparture": 1759612200,
+          "delayArrivalMinutes": 18,
+          "delayDepartureMinutes": 18
         },
         {
           "station": {
             "code": "PRYJ"
           },
-          "scheduledArrival": 1759439580,
-          "scheduledDeparture": 1759439700,
-          "actualArrival": 1759440332,
-          "actualDeparture": 1759440835,
-          "delayArrivalMinutes": 13,
-          "delayDepartureMinutes": 19,
+          "scheduledArrival": 1759612380,
+          "scheduledDeparture": 1759612500,
+          "actualArrival": 1759613436,
+          "actualDeparture": 1759613556,
+          "delayArrivalMinutes": 18,
+          "delayDepartureMinutes": 18,
           "platform": "1"
         },
         {
           "station": {
             "code": "CNB"
           },
-          "scheduledArrival": 1759447200,
-          "scheduledDeparture": 1759447500,
-          "actualArrival": 1759448750,
-          "delayArrivalMinutes": 26,
-          "platform": "1"
+          "scheduledArrival": 1759620000,
+          "scheduledDeparture": 1759620300,
+          "actualArrival": 1759620456,
+          "actualDeparture": 1759620756,
+          "delayArrivalMinutes": 8,
+          "delayDepartureMinutes": 8
         },
         {
           "station": {
             "code": "NDLS"
           },
-          "scheduledArrival": 1759466100,
-          "actualArrival": 1759468353,
-          "delayArrivalMinutes": 38,
-          "platform": "14"
+          "scheduledArrival": 1759638900,
+          "actualArrival": 1759639356,
+          "delayArrivalMinutes": 8
         }
       ]
     },
     "statusSummary": "Live status available"
   },
   "meta": {
-    "timestamp": "2025-10-04T20:37:08.130Z",
-    "traceId": "3e80b69d-c3b3-443c-ba94-2659e93d304e",
-    "executionTime": 418,
+    "timestamp": "2025-10-04T21:11:14.048Z",
+    "traceId": "d043dd8f-2a11-4e70-a5f3-b23daa4aa406",
+    "executionTime": 330,
     "service": "TrainAPI_V1",
     "method": "getTrainData"
   }
