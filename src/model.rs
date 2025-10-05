@@ -1,5 +1,6 @@
 use bitflags::bitflags;
 use serde::{Deserialize, Serialize};
+use serde_json::Value;
 use std::collections::HashMap;
 use std::time::{SystemTime, UNIX_EPOCH};
 
@@ -21,8 +22,8 @@ pub struct Train {
     pub return_train_number: String,
     pub travel_time_minutes: u32,
     pub total_halts: u32,
-    pub distance_km: u32,
-    pub avg_speed_kmph: u32,
+    pub distance_km: Value,
+    pub avg_speed_kmph: Value,
 }
 
 impl Train {
@@ -85,11 +86,11 @@ pub struct RouteInfo {
     pub is_halt: u8,
     pub scheduled_arrival: Option<u32>,
     pub scheduled_departure: Option<u32>,
-    pub halt_duration_minutes: u32,
+    pub halt_duration_minutes: Option<u32>,
     pub platform: Option<String>,
     pub day: u8,
-    pub speed_on_section_kmph: Option<u32>,
-    pub track_type: String,
+    pub speed_on_section_kmph: Option<Value>,
+    pub track_type: Option<String>,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
@@ -154,12 +155,12 @@ pub struct TrainLiveData {
 #[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CurrentLocation {
-    pub latitude: f64,
-    pub longitude: f64,
+    pub latitude: Option<f64>,
+    pub longitude: Option<f64>,
     pub station_code: String,
     pub status: String,
-    pub distance_from_origin_km: f64,
-    pub distance_from_last_station_km: f64,
+    pub distance_from_origin_km: Option<f64>,
+    pub distance_from_last_station_km: Option<f64>,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
@@ -248,6 +249,7 @@ mod tests {
         for data in [
             include_str!("../data/train_data1.json"),
             include_str!("../data/train_data2.json"),
+            include_str!("../data/train_data3.json"),
         ] {
             let response: TrainStatusResponse = serde_json::from_str(data).unwrap();
             assert!(response.success);

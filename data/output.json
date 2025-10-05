@@ -13,50 +13,50 @@
     "returnTrainNumber": "12302",
     "travelTimeMinutes": 1020,
     "totalHalts": 7,
-    "distanceKm": 1451,
-    "avgSpeedKmph": 84
+    "distanceKm": "1451.00",
+    "avgSpeedKmph": "84.00"
   },
   "live_data": {
     "trainNumber": "12301",
-    "journeyDate": "2025-10-04",
-    "lastUpdatedAt": "2025-10-04T21:10:50.000Z",
+    "journeyDate": "04-Oct-2025",
+    "lastUpdatedAt": "2025-10-05T05:00:00.000Z",
     "currentLocation": {
-      "latitude": 25.27344,
-      "longitude": 81.97625,
-      "stationCode": "BEP",
-      "status": "DEPARTED",
-      "distanceFromOriginKm": 789.1875386716395,
-      "distanceFromLastStationKm": 1.5875630857019587
+      "latitude": null,
+      "longitude": null,
+      "stationCode": "NDLS",
+      "status": "AT_STATION",
+      "distanceFromOriginKm": null,
+      "distanceFromLastStationKm": null
     },
-    "dataSource": "OFFICIAL",
-    "statusSummary": "Live status available",
+    "dataSource": "NTES",
+    "statusSummary": "Live status available.",
     "route": [
       {
         "station": {
           "code": "HWH",
           "name": "Howrah Jn"
         },
-        "scheduledArrival": 1759576800,
-        "scheduledDeparture": 1759576800,
-        "actualArrival": null,
-        "actualDeparture": null,
-        "delayArrivalMinutes": null,
-        "delayDepartureMinutes": null,
+        "scheduledArrival": 1759708446,
+        "scheduledDeparture": 1759596600,
+        "actualArrival": 1759708446,
+        "actualDeparture": 1759596600,
+        "delayArrivalMinutes": 0,
+        "delayDepartureMinutes": 0,
         "platform": "9",
-        "status": "None"
+        "status": "Departed"
       },
       {
         "station": {
           "code": "ASN",
           "name": "Asansol Jn"
         },
-        "scheduledArrival": 1759583820,
-        "scheduledDeparture": 1759583940,
-        "actualArrival": 1759584511,
-        "actualDeparture": 1759585035,
-        "delayArrivalMinutes": 12,
-        "delayDepartureMinutes": 18,
-        "platform": "3",
+        "scheduledArrival": 1759603620,
+        "scheduledDeparture": 1759603740,
+        "actualArrival": 1759604460,
+        "actualDeparture": 1759604580,
+        "delayArrivalMinutes": 14,
+        "delayDepartureMinutes": 14,
+        "platform": "4",
         "status": "Departed"
       },
       {
@@ -64,12 +64,12 @@
           "code": "DHN",
           "name": "Dhanbad Jn"
         },
-        "scheduledArrival": 1759587900,
-        "scheduledDeparture": 1759588200,
-        "actualArrival": 1759588053,
-        "actualDeparture": 1759588619,
-        "delayArrivalMinutes": 3,
-        "delayDepartureMinutes": 7,
+        "scheduledArrival": 1759607700,
+        "scheduledDeparture": 1759608000,
+        "actualArrival": 1759607940,
+        "actualDeparture": 1759608240,
+        "delayArrivalMinutes": 4,
+        "delayDepartureMinutes": 4,
         "platform": "3",
         "status": "Departed"
       },
@@ -78,12 +78,12 @@
           "code": "PNME",
           "name": "Parasnath"
         },
-        "scheduledArrival": 1759590000,
-        "scheduledDeparture": 1759590120,
-        "actualArrival": 1759590319,
-        "actualDeparture": 1759590621,
-        "delayArrivalMinutes": 5,
-        "delayDepartureMinutes": 8,
+        "scheduledArrival": 1759609800,
+        "scheduledDeparture": 1759609920,
+        "actualArrival": 1759610220,
+        "actualDeparture": 1759610340,
+        "delayArrivalMinutes": 7,
+        "delayDepartureMinutes": 7,
         "platform": "3",
         "status": "Departed"
       },
@@ -92,12 +92,12 @@
           "code": "GAYA",
           "name": "Gaya Jn"
         },
-        "scheduledArrival": 1759597320,
-        "scheduledDeparture": 1759597500,
-        "actualArrival": 1759597384,
-        "actualDeparture": 1759597919,
+        "scheduledArrival": 1759617120,
+        "scheduledDeparture": 1759617300,
+        "actualArrival": 1759617180,
+        "actualDeparture": 1759617480,
         "delayArrivalMinutes": 1,
-        "delayDepartureMinutes": 7,
+        "delayDepartureMinutes": 3,
         "platform": "1",
         "status": "Departed"
       },
@@ -106,27 +106,13 @@
           "code": "DDU",
           "name": "Pt DD Upadhyaya Jn"
         },
-        "scheduledArrival": 1759605000,
-        "scheduledDeparture": 1759605600,
-        "actualArrival": 1759605884,
-        "actualDeparture": null,
-        "delayArrivalMinutes": 15,
-        "delayDepartureMinutes": null,
-        "platform": "7",
-        "status": "Arrived"
-      },
-      {
-        "station": {
-          "code": "BEP",
-          "name": "Bheerpur"
-        },
-        "scheduledArrival": 1759611120,
-        "scheduledDeparture": 1759611120,
-        "actualArrival": 1759612192,
-        "actualDeparture": 1759612200,
-        "delayArrivalMinutes": 18,
+        "scheduledArrival": 1759624800,
+        "scheduledDeparture": 1759625400,
+        "actualArrival": 1759625940,
+        "actualDeparture": 1759626480,
+        "delayArrivalMinutes": 19,
         "delayDepartureMinutes": 18,
-        "platform": null,
+        "platform": "7",
         "status": "Departed"
       },
       {
@@ -134,12 +120,12 @@
           "code": "PRYJ",
           "name": "Prayagraj Jn"
         },
-        "scheduledArrival": 1759612380,
-        "scheduledDeparture": 1759612500,
-        "actualArrival": 1759613436,
-        "actualDeparture": 1759613556,
-        "delayArrivalMinutes": 18,
-        "delayDepartureMinutes": 18,
+        "scheduledArrival": 1759632180,
+        "scheduledDeparture": 1759632300,
+        "actualArrival": 1759633560,
+        "actualDeparture": 1759633740,
+        "delayArrivalMinutes": 23,
+        "delayDepartureMinutes": 24,
         "platform": "1",
         "status": "Departed"
       },
@@ -148,13 +134,13 @@
           "code": "CNB",
           "name": "Kanpur Ctrl"
         },
-        "scheduledArrival": 1759620000,
-        "scheduledDeparture": 1759620300,
-        "actualArrival": 1759620456,
-        "actualDeparture": 1759620756,
-        "delayArrivalMinutes": 8,
-        "delayDepartureMinutes": 8,
-        "platform": null,
+        "scheduledArrival": 1759639800,
+        "scheduledDeparture": 1759640100,
+        "actualArrival": 1759641120,
+        "actualDeparture": 1759641720,
+        "delayArrivalMinutes": 22,
+        "delayDepartureMinutes": 27,
+        "platform": "1",
         "status": "Departed"
       },
       {
@@ -162,13 +148,13 @@
           "code": "NDLS",
           "name": "New Delhi"
         },
-        "scheduledArrival": 1759638900,
-        "scheduledDeparture": null,
-        "actualArrival": 1759639356,
-        "actualDeparture": null,
-        "delayArrivalMinutes": 8,
-        "delayDepartureMinutes": null,
-        "platform": null,
+        "scheduledArrival": 1759658700,
+        "scheduledDeparture": 1759708446,
+        "actualArrival": 1759660200,
+        "actualDeparture": 1759708446,
+        "delayArrivalMinutes": 25,
+        "delayDepartureMinutes": 0,
+        "platform": "14",
         "status": "Arrived"
       }
     ]
