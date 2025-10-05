@@ -2,8 +2,10 @@ use crate::model::{TrainLiveStatus, TrainStatusResponse, TrainStatusResult};
 use anyhow::Error;
 use axum::Json;
 use axum::extract::Query;
+use axum::http::StatusCode;
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
+use tracing::{error, info};
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct TrainStatusQuery {
@@ -26,28 +28,34 @@ pub async fn get_train_status(params: TrainStatusQuery) -> Result<TrainStatusRes
 
 pub async fn train_live_status(
     Query(params): Query<TrainStatusQuery>,
-) -> Result<Json<TrainLiveStatus>, Json<String>> {
+) -> Result<Json<TrainLiveStatus>, (StatusCode, Json<String>)> {
+    info!("Fetching train status for {} on date {}", params.journey_date, params.journey_date);
     let result = get_train_status(params)
         .await
-        .map_err(|e| Json(e.to_string()))?;
+        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, Json(e.to_string())))?;
     match result {
         TrainStatusResult::Data(data) => Ok(Json(*data)),
-        TrainStatusResult::Error(e) => Err(Json(e.message)),
+        TrainStatusResult::Error(e) => {
+            error!("Error: {}", serde_json::to_string(&e).unwrap());
+            Err((
+                StatusCode::from_u16(e.status_code.unwrap_or(401)).unwrap(),
+                Json(e.message),
+            ))
+        }
     }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use tracing::info;
 
     #[tokio::test]
     async fn test_get_train_status() {
         let query = TrainStatusQuery {
-            journey_date: "2025-10-02".to_string(),
+            journey_date: "2025-10-05".to_string(),
             train_number: "12301".to_string(),
         };
         let result = get_train_status(query).await.unwrap();
-        info!("train status response: {:#?}", result);
+        println!("train status response: {:#?}", result);
     }
 }
