@@ -18,25 +18,12 @@ const routeTable = document.getElementById('routeTable');
 const trainStats = document.getElementById('trainStats');
 
 // Utility functions for time conversion
-function epochToIST(epochSeconds) {
-    if (!epochSeconds) return null;
-    
-    const date = new Date(epochSeconds * 1000);
-    
-    // Convert to IST (UTC+5:30)
-    const istOffset = 5.5 * 60 * 60 * 1000; // IST offset in milliseconds
-    const istDate = new Date(date.getTime() + istOffset);
-    
-    return istDate;
-}
-
 function formatTimeIST(epochSeconds) {
     if (!epochSeconds) return '--';
     
-    const istDate = epochToIST(epochSeconds);
-    if (!istDate) return '--';
+    const date = new Date(epochSeconds * 1000);
     
-    return istDate.toLocaleTimeString('en-IN', {
+    return date.toLocaleTimeString('en-IN', {
         hour: '2-digit',
         minute: '2-digit',
         hour12: false,
@@ -47,10 +34,9 @@ function formatTimeIST(epochSeconds) {
 function formatDateTimeIST(epochSeconds) {
     if (!epochSeconds) return '--';
     
-    const istDate = epochToIST(epochSeconds);
-    if (!istDate) return '--';
+    const date = new Date(epochSeconds * 1000);
     
-    return istDate.toLocaleString('en-IN', {
+    return date.toLocaleString('en-IN', {
         day: '2-digit',
         month: '2-digit',
         year: 'numeric',
