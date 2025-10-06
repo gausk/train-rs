@@ -110,9 +110,22 @@ function displayResults(data) {
         // Display current status from live data or general status
         if (data.live_data && data.live_data.currentLocation) {
             const currentLoc = data.live_data.currentLocation;
+            
             currentLocation.innerHTML = `
-                <strong>Current Location:</strong> ${currentLoc.stationCode} - ${currentLoc.status}
-                <br><small>Distance from origin: ${currentLoc.distanceFromOriginKm}km</small>
+                <div class="current-location-card">
+                    <div class="location-header">
+                        <span class="location-badge">${currentLoc.status}</span>
+                    </div>
+                    <div class="location-details">
+                        <div class="station-info">
+                            <span class="station-code">${currentLoc.stationCode}</span>
+                            ${currentLoc.stationName ? `<span class="station-name">${currentLoc.stationName}</span>` : ''}
+                        </div>
+                        ${currentLoc.distanceFromOriginKm ? `<div class="distance-info">
+                            <small>Distance from origin: <strong>${currentLoc.distanceFromOriginKm}km</strong></small>
+                        </div>` : ''}
+                    </div>
+                </div>
             `;
             
             // Show last updated time if available
@@ -120,13 +133,18 @@ function displayResults(data) {
                 // Parse ISO date string to epoch seconds
                 const updateTimeEpoch = Math.floor(new Date(data.live_data.lastUpdatedAt).getTime() / 1000);
                 const updateTime = formatDateTimeIST(updateTimeEpoch);
-                delay.innerHTML = `<span class="status-info">📍 ${currentLoc.status}</span><br><small>Last updated: ${updateTime} IST</small>`;
+                delay.innerHTML = `<div class="update-info"><small>Last updated: ${updateTime} IST</small></div>`;
             } else {
-                delay.innerHTML = `<span class="status-info">📍 ${currentLoc.status}</span>`;
+                delay.innerHTML = '';
             }
             delay.className = 'delay';
         } else {
-            currentLocation.innerHTML = `<strong>Status:</strong> ${data.live_data?.statusSummary || 'No live data available'}`;
+            currentLocation.innerHTML = `
+                <div class="no-live-data">
+                    <span class="status-badge">No Live Data</span>
+                    <p>${data.live_data?.statusSummary || 'Live tracking not available for this train'}</p>
+                </div>
+            `;
             delay.innerHTML = '';
         }    // Display train statistics
     displayTrainStats(data.train);
@@ -336,12 +354,12 @@ function displayRouteTable(routeInfo, liveData) {
         const stationCode = station.station?.code || station.stationCode || '--';
         
         item.innerHTML = `
-            <div class="station-code">${stationCode}</div>
-            <div class="station-name">${stationName}</div>
-            <div class="time scheduled-time">${scheduledDisplay}</div>
-            <div class="time actual-time-cell">${actualDisplay}</div>
-            <div class="platform">${station.platform || '--'}</div>
-            <div class="status-cell">${detailedStatus}</div>
+            <div class="station-code" data-label="Code">${stationCode}</div>
+            <div class="station-name" data-label="Station">${stationName}</div>
+            <div class="time scheduled-time" data-label="Scheduled">${scheduledDisplay}</div>
+            <div class="time actual-time-cell" data-label="Actual">${actualDisplay}</div>
+            <div class="platform" data-label="Platform">${station.platform || '--'}</div>
+            <div class="status-cell" data-label="Status">${detailedStatus}</div>
         `;
         
         routeTable.appendChild(item);
