@@ -170,7 +170,7 @@ function displayRouteTable(routeInfo, liveData) {
     // Create header
     const header = document.createElement('div');
     header.className = 'route-item';
-    header.style.fontWeight = 'bold';
+    header.style.fontWeight = '700';
     header.style.background = '#667eea';
     header.style.color = 'white';
     header.innerHTML = `
@@ -233,19 +233,17 @@ function displayRouteTable(routeInfo, liveData) {
         
         // Format scheduled times using epoch timestamps
         const scheduledArrival = station.scheduledArrival ? 
-            formatTimeIST(station.scheduledArrival) : 
-            (index === 0 ? 'Start' : '--');
+            formatTimeIST(station.scheduledArrival) : '--';
             
         const scheduledDeparture = station.scheduledDeparture ? 
-            formatTimeIST(station.scheduledDeparture) : 
-            (index === routeInfo.length - 1 ? 'End' : '--');
+            formatTimeIST(station.scheduledDeparture) : '--';
         
         // Build scheduled times display
         let scheduledDisplay = '';
         if (index === 0) {
-            scheduledDisplay = `<strong>Start</strong><br>${scheduledDeparture}`;
+            scheduledDisplay = `<div class="start-station"><strong>Start:</strong> ${scheduledDeparture !== '--' ? scheduledDeparture : 'N/A'}</div>`;
         } else if (index === routeInfo.length - 1) {
-            scheduledDisplay = `${scheduledArrival}<br><strong>End</strong>`;
+            scheduledDisplay = `<div class="end-station">Arr: ${scheduledArrival !== '--' ? scheduledArrival : 'N/A'}<br><strong>End Station</strong></div>`;
         } else {
             scheduledDisplay = `Arr: ${scheduledArrival}<br>Dep: ${scheduledDeparture}`;
         }
@@ -412,15 +410,11 @@ function formatStatus(status) {
     
     switch (status.toUpperCase()) {
         case 'AT_STATION':
-            return 'At Station';
+            return 'At station';
         case 'DEPARTED':
             return 'Departed from';
         case 'ARRIVED':
             return 'Arrived at';
-        case 'RUNNING':
-            return 'Running towards';
-        case 'APPROACHING':
-            return 'Approaching';
         default:
             // Clean up underscores and capitalize first letter
             return status.split('_')

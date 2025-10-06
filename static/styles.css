@@ -399,10 +399,15 @@ button:disabled {
 }
 
 .header-cell {
-    font-weight: bold !important;
+    font-weight: 700 !important;
     font-size: 0.85rem !important;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    color: white !important;
+}
+
+.route-item:first-child > div {
+    font-weight: 700 !important;
     color: white !important;
 }
 
@@ -660,12 +665,14 @@ footer a:hover {
     
     /* Special handling for status column */
     .status-cell {
-        flex-direction: column !important;
+        flex-direction: row !important;
         align-items: flex-start !important;
+        flex-wrap: wrap;
     }
     
     .status-cell::before {
-        margin-bottom: 4px;
+        margin-bottom: 0px;
+        margin-right: 8px;
     }
     
     .status-cell .status {
@@ -676,6 +683,26 @@ footer a:hover {
         display: block;
         line-height: 1.2;
         margin-top: 2px;
+        margin-left: 0px;
+        width: 100%;
+        flex-basis: 100%;
+    }
+    
+    .status-cell .status {
+        display: inline-block;
+        margin-right: 8px;
+    }
+    
+    .start-station, .end-station {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        line-height: 1.3;
+    }
+    
+    .start-station strong, .end-station strong {
+        color: #28a745;
+        font-size: 0.85em;
     }
     
     .station-code::before { content: "Code"; }
