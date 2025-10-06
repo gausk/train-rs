@@ -113,20 +113,20 @@ function displayResults(data) {
             
             currentLocation.innerHTML = `
                 <div class="current-location-card">
-                    <div class="location-header">
-                        <span class="location-badge">${currentLoc.status}</span>
-                    </div>
                     <div class="location-details">
                         <div class="station-info">
-                            <div class="station-main">
-                                ${currentLoc.stationName ? 
-                                    `<span class="station-display" title="${currentLoc.stationCode} - ${currentLoc.stationName}">${currentLoc.stationCode} • ${currentLoc.stationName}</span>` : 
-                                    `<span class="station-display" title="${currentLoc.stationCode}">${currentLoc.stationCode}</span>`
+                            <div class="station-line">
+                                <span class="station-display">
+                                    ${currentLoc.status} ${currentLoc.stationName ? 
+                                        `${currentLoc.stationName} (${currentLoc.stationCode})` : 
+                                        currentLoc.stationCode
+                                    }
+                                </span>
+                                ${currentLoc.distanceFromOriginKm ? 
+                                    `<span class="distance-inline">• Distance from Origin: ${Math.round(currentLoc.distanceFromOriginKm)}km</span>` : 
+                                    ''
                                 }
                             </div>
-                            ${currentLoc.distanceFromOriginKm ? `<div class="distance-info">
-                                <span class="distance-text">Distance: <strong>${Math.round(currentLoc.distanceFromOriginKm)}km</strong></span>
-                            </div>` : ''}
                         </div>
                     </div>
                 </div>
@@ -174,12 +174,12 @@ function displayRouteTable(routeInfo, liveData) {
     header.style.background = '#667eea';
     header.style.color = 'white';
     header.innerHTML = `
-        <div class="station-code">Code</div>
-        <div class="station-name">Station Name</div>
-        <div class="time">Scheduled</div>
-        <div class="time">Actual</div>
-        <div class="platform">Platform</div>
-        <div class="status">Status & Delay</div>
+        <div class="station-code header-cell">Code</div>
+        <div class="station-name header-cell">Station Name</div>
+        <div class="time header-cell">Scheduled</div>
+        <div class="time header-cell">Actual</div>
+        <div class="platform header-cell">Platform</div>
+        <div class="status header-cell">Status & Delay</div>
     `;
     
     routeTable.innerHTML = '';
