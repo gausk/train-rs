@@ -158,9 +158,22 @@ pub struct CurrentLocation {
     pub latitude: Option<f64>,
     pub longitude: Option<f64>,
     pub station_code: String,
+    pub station_name: Option<String>,
     pub status: String,
     pub distance_from_origin_km: Option<f64>,
     pub distance_from_last_station_km: Option<f64>,
+}
+
+impl CurrentLocation {
+    pub fn update_station_name(&mut self, map: &HashMap<String, String>) {
+        self.station_name = map.get(&self.station_code).cloned();
+    }
+
+    pub fn update_distance_from_origin_km(&mut self) {
+        if let Some(x) = self.distance_from_origin_km.as_mut() {
+            *x = (*x * 10.0).round() / 10.0;
+        }
+    }
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
@@ -208,6 +221,8 @@ impl From<TrainStatusData> for TrainLiveStatus {
             .as_secs();
 
         let live_data = train_status_data.live_data.map(|mut live_data| {
+            live_data.current_location.update_distance_from_origin_km();
+            live_data.current_location.update_station_name(&map);
             live_data.route.iter_mut().for_each(|route| {
                 route.update_station_name(&map);
                 route.update_status(now);

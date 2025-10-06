@@ -24,8 +24,9 @@
       "latitude": null,
       "longitude": null,
       "stationCode": "NDLS",
+      "stationName": "New Delhi",
       "status": "AT_STATION",
-      "distanceFromOriginKm": null,
+      "distanceFromOriginKm": 12.3,
       "distanceFromLastStationKm": null
     },
     "dataSource": "NTES",
@@ -155,7 +156,7 @@
         "delayArrivalMinutes": 25,
         "delayDepartureMinutes": 0,
         "platform": "14",
-        "status": "Arrived"
+        "status": "Departed"
       }
     ]
   }

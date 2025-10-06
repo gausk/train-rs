@@ -5979,7 +5979,8 @@
       "lastUpdatedAt": "2025-10-05T05:00:00.000Z",
       "currentLocation": {
         "stationCode": "NDLS",
-        "status": "AT_STATION"
+        "status": "AT_STATION",
+        "distanceFromOriginKm": 12.345678
       },
       "dataSource": "NTES",
       "statusSummary": "Live status available.",
