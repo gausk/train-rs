@@ -116,33 +116,33 @@ function displayResults(data) {
     console.log('Displaying results:', data);
     
     // Display train information
-    trainName.textContent = `${data.train.train_number} - ${data.train.train_name}`;
-    trainRoute.textContent = `${data.train.source_station_name} → ${data.train.destination_station_name}`;
-    trainType.textContent = `${data.train.type_} • Zone: ${data.train.zone} • Distance: ${data.train.distance_km}km`;
-    runningDays.textContent = `Running Days: ${data.train.running_days}`;
+    trainName.textContent = `${data.train.trainNumber} - ${data.train.trainName}`;
+    trainRoute.textContent = `${data.train.sourceStationName} → ${data.train.destinationStationName}`;
+    trainType.textContent = `${data.train.type} • Zone: ${data.train.zone} • Distance: ${data.train.distanceKm}km`;
+    runningDays.textContent = `Running Days: ${data.train.runningDays}`;
     
-    // Display current status from live data or general status
-    if (data.live_data && data.live_data.current_location) {
-        const currentLoc = data.live_data.current_location;
-        currentLocation.innerHTML = `
-            <strong>Current Location:</strong> ${currentLoc.station_code} - ${currentLoc.status}
-            <br><small>Distance from origin: ${currentLoc.distance_from_origin_km}km</small>
-        `;
-        
-        // Show last updated time if available
-        if (data.live_data.last_updated_at) {
-            const updateTime = formatDateTimeIST(parseInt(data.live_data.last_updated_at));
-            delay.innerHTML = `<span class="status-info">📍 ${currentLoc.status}</span><br><small>Last updated: ${updateTime} IST</small>`;
+        // Display current status from live data or general status
+        if (data.live_data && data.live_data.currentLocation) {
+            const currentLoc = data.live_data.currentLocation;
+            currentLocation.innerHTML = `
+                <strong>Current Location:</strong> ${currentLoc.stationCode} - ${currentLoc.status}
+                <br><small>Distance from origin: ${currentLoc.distanceFromOriginKm}km</small>
+            `;
+            
+            // Show last updated time if available
+            if (data.live_data.lastUpdatedAt) {
+                // Parse ISO date string to epoch seconds
+                const updateTimeEpoch = Math.floor(new Date(data.live_data.lastUpdatedAt).getTime() / 1000);
+                const updateTime = formatDateTimeIST(updateTimeEpoch);
+                delay.innerHTML = `<span class="status-info">📍 ${currentLoc.status}</span><br><small>Last updated: ${updateTime} IST</small>`;
+            } else {
+                delay.innerHTML = `<span class="status-info">📍 ${currentLoc.status}</span>`;
+            }
+            delay.className = 'delay';
         } else {
-            delay.innerHTML = `<span class="status-info">📍 ${currentLoc.status}</span>`;
-        }
-        delay.className = 'delay';
-    } else {
-        currentLocation.innerHTML = `<strong>Status:</strong> ${data.live_data?.status_summary || 'No live data available'}`;
-        delay.innerHTML = '';
-    }
-    
-    // Display train statistics
+            currentLocation.innerHTML = `<strong>Status:</strong> ${data.live_data?.statusSummary || 'No live data available'}`;
+            delay.innerHTML = '';
+        }    // Display train statistics
     displayTrainStats(data.train);
     
     // Display route information - Note: route info is now inside live_data
@@ -204,8 +204,8 @@ function displayRouteTable(routeInfo, liveData) {
             }
         } else {
             // Fallback logic based on actual times
-            const hasArrival = station.actual_arrival != null;
-            const hasDeparture = station.actual_departure != null;
+            const hasArrival = station.actualArrival != null;
+            const hasDeparture = station.actualDeparture != null;
             
             if (hasArrival && !hasDeparture && index < routeInfo.length - 1) {
                 isCurrent = true;
@@ -224,12 +224,12 @@ function displayRouteTable(routeInfo, liveData) {
         }
         
         // Format scheduled times using epoch timestamps
-        const scheduledArrival = station.scheduled_arrival ? 
-            formatTimeIST(station.scheduled_arrival) : 
+        const scheduledArrival = station.scheduledArrival ? 
+            formatTimeIST(station.scheduledArrival) : 
             (index === 0 ? 'Start' : '--');
             
-        const scheduledDeparture = station.scheduled_departure ? 
-            formatTimeIST(station.scheduled_departure) : 
+        const scheduledDeparture = station.scheduledDeparture ? 
+            formatTimeIST(station.scheduledDeparture) : 
             (index === routeInfo.length - 1 ? 'End' : '--');
         
         // Build scheduled times display
@@ -252,15 +252,15 @@ function displayRouteTable(routeInfo, liveData) {
         
         try {
             // Handle actual arrival
-            if (station.actual_arrival && index > 0) {
-                const actualArrTime = formatTimeIST(station.actual_arrival);
+            if (station.actualArrival && index > 0) {
+                const actualArrTime = formatTimeIST(station.actualArrival);
                 if (actualArrTime !== '--') {
                     actualTimes.push(`Arr: ${actualArrTime}`);
                 }
                 
                 // Calculate delay for arrival if delay data is available
-                if (typeof station.delay_arrival_minutes === 'number') {
-                    const delayMinutes = station.delay_arrival_minutes;
+                if (typeof station.delayArrivalMinutes === 'number') {
+                    const delayMinutes = station.delayArrivalMinutes;
                     if (delayMinutes > 0) {
                         delays.push(`Arr: +${delayMinutes}m late`);
                     } else if (delayMinutes < 0) {
@@ -272,15 +272,15 @@ function displayRouteTable(routeInfo, liveData) {
             }
             
             // Handle actual departure
-            if (station.actual_departure && index < routeInfo.length - 1) {
-                const actualDepTime = formatTimeIST(station.actual_departure);
+            if (station.actualDeparture && index < routeInfo.length - 1) {
+                const actualDepTime = formatTimeIST(station.actualDeparture);
                 if (actualDepTime !== '--') {
                     actualTimes.push(`Dep: ${actualDepTime}`);
                 }
                 
                 // Calculate delay for departure if delay data is available
-                if (typeof station.delay_departure_minutes === 'number') {
-                    const delayMinutes = station.delay_departure_minutes;
+                if (typeof station.delayDepartureMinutes === 'number') {
+                    const delayMinutes = station.delayDepartureMinutes;
                     if (delayMinutes > 0) {
                         delays.push(`Dep: +${delayMinutes}m late`);
                     } else if (delayMinutes < 0) {
@@ -298,13 +298,30 @@ function displayRouteTable(routeInfo, liveData) {
         if (actualTimes.length > 0) {
             actualDisplay = `<span class="actual-time">${actualTimes.join('<br>')}</span>`;
         } else {
-            // Show appropriate message when no actual data available
-            if (stationStatus === 'completed') {
-                actualDisplay = '<span class="no-data">Completed</span>';
-            } else if (stationStatus === 'current') {
-                actualDisplay = '<span class="no-data">In progress</span>';
+            // Show actual times even if no actualTimes array was built
+            let fallbackTimes = [];
+            
+            // Check for actual arrival time
+            if (station.actualArrival && index > 0) {
+                const actualArrTime = formatTimeIST(station.actualArrival);
+                if (actualArrTime !== '--') {
+                    fallbackTimes.push(`Arr: ${actualArrTime}`);
+                }
+            }
+            
+            // Check for actual departure time
+            if (station.actualDeparture && index < routeInfo.length - 1) {
+                const actualDepTime = formatTimeIST(station.actualDeparture);
+                if (actualDepTime !== '--') {
+                    fallbackTimes.push(`Dep: ${actualDepTime}`);
+                }
+            }
+            
+            if (fallbackTimes.length > 0) {
+                actualDisplay = `<span class="actual-time">${fallbackTimes.join('<br>')}</span>`;
             } else {
-                actualDisplay = '<span class="no-data">Scheduled</span>';
+                // Only show status messages when there are truly no actual times
+                actualDisplay = '<span class="no-data">--</span>';
             }
         }
         
@@ -316,8 +333,8 @@ function displayRouteTable(routeInfo, liveData) {
         }
         
         // Add departed status for completed stations
-        if (station.actual_departure && index < routeInfo.length - 1 && stationStatus === 'completed') {
-            const depTime = formatTimeIST(station.actual_departure);
+        if (station.actualDeparture && index < routeInfo.length - 1 && stationStatus === 'completed') {
+            const depTime = formatTimeIST(station.actualDeparture);
             if (depTime !== '--') {
                 detailedStatus = `<span class="status departed">DEPARTED</span><br><small class="departed-time">Left at ${depTime}</small>`;
                 if (delays.length > 0) {
@@ -329,8 +346,8 @@ function displayRouteTable(routeInfo, liveData) {
         }
         
         // Get station name - handle both direct name and station object
-        const stationName = station.station?.name || station.station_name || 'Unknown Station';
-        const stationCode = station.station?.code || station.station_code || '--';
+        const stationName = station.station?.name || station.stationName || 'Unknown Station';
+        const stationCode = station.station?.code || station.stationCode || '--';
         
         item.innerHTML = `
             <div class="station-code">${stationCode}</div>
@@ -347,11 +364,11 @@ function displayRouteTable(routeInfo, liveData) {
 
 function displayTrainStats(train) {
     const stats = [
-        { label: 'Travel Time', value: formatDuration(train.travel_time_minutes) },
-        { label: 'Total Distance', value: `${train.distance_km} km` },
-        { label: 'Average Speed', value: `${train.avg_speed_kmph} km/h` },
-        { label: 'Total Halts', value: train.total_halts },
-        { label: 'Return Train', value: train.return_train_number || '--' },
+        { label: 'Travel Time', value: formatDuration(train.travelTimeMinutes) },
+        { label: 'Total Distance', value: `${train.distanceKm} km` },
+        { label: 'Average Speed', value: `${train.avgSpeedKmph} km/h` },
+        { label: 'Total Halts', value: train.totalHalts },
+        { label: 'Return Train', value: train.returnTrainNumber || '--' },
         { label: 'Zone', value: train.zone }
     ];
     
