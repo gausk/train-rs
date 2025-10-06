@@ -699,6 +699,16 @@ footer a:hover {
         width: calc(100% - 93px);
     }
     
+    /* Remove box styling for status in mobile view */
+    .status-cell .status {
+        text-align: left !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        color: #333 !important;
+        font-weight: 600;
+    }
+    
     .start-station, .end-station {
         display: flex;
         flex-direction: column;
