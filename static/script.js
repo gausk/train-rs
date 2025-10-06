@@ -118,12 +118,16 @@ function displayResults(data) {
                     </div>
                     <div class="location-details">
                         <div class="station-info">
-                            <span class="station-code">${currentLoc.stationCode}</span>
-                            ${currentLoc.stationName ? `<span class="station-name">${currentLoc.stationName}</span>` : ''}
+                            <div class="station-main">
+                                ${currentLoc.stationName ? 
+                                    `<span class="station-display" title="${currentLoc.stationCode} - ${currentLoc.stationName}">${currentLoc.stationCode} • ${currentLoc.stationName}</span>` : 
+                                    `<span class="station-display" title="${currentLoc.stationCode}">${currentLoc.stationCode}</span>`
+                                }
+                            </div>
+                            ${currentLoc.distanceFromOriginKm ? `<div class="distance-info">
+                                <span class="distance-text">Distance: <strong>${Math.round(currentLoc.distanceFromOriginKm)}km</strong></span>
+                            </div>` : ''}
                         </div>
-                        ${currentLoc.distanceFromOriginKm ? `<div class="distance-info">
-                            <small>Distance from origin: <strong>${currentLoc.distanceFromOriginKm}km</strong></small>
-                        </div>` : ''}
                     </div>
                 </div>
             `;
@@ -393,7 +397,7 @@ function getStatusText(status, index, totalStations) {
         case 'completed':
             return index === totalStations - 1 ? 'ARRIVED' : 'DEPARTED';
         case 'current':
-            return 'AT STATION';
+            return 'ARRIVED';
         case 'upcoming':
             return 'UPCOMING';
         case 'scheduled':

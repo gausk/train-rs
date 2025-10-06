@@ -235,16 +235,16 @@ button:disabled {
 }
 
 .current-location-card {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
     border-radius: 12px;
     padding: 20px;
     color: white;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
 }
 
 .location-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     margin-bottom: 15px;
 }
@@ -259,27 +259,47 @@ button:disabled {
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+.location-details {
+    text-align: center;
+}
+
 .station-info {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    align-items: center;
+    gap: 8px;
 }
 
-.station-code {
-    font-size: 1.8rem;
-    font-weight: bold;
-    letter-spacing: 1px;
+.station-main {
+    text-align: center;
 }
 
-.station-name {
-    font-size: 1.1rem;
-    opacity: 0.9;
-    font-weight: 500;
+.station-display {
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-align: center;
+    display: block;
+    line-height: 1.2;
 }
 
 .distance-info {
-    margin-top: 10px;
-    opacity: 0.8;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 8px 16px;
+    border-radius: 20px;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.distance-text {
+    font-size: 0.9rem;
+    opacity: 0.95;
+    font-weight: 500;
+}
+
+.distance-text strong {
+    color: #ffd700;
+    font-weight: 600;
 }
 
 .distance-info strong {
@@ -683,19 +703,33 @@ footer a:hover {
     .current-location-card {
         padding: 16px;
         border-radius: 10px;
+        margin: 0 -5px; /* Slight negative margin for better mobile fit */
     }
     
-    .station-code {
-        font-size: 1.4rem;
+    .station-display {
+        font-size: 1.1rem;
+        line-height: 1.4;
+        word-break: break-word; /* Handle long station names */
     }
     
-    .station-name {
-        font-size: 1rem;
+    .distance-info {
+        padding: 6px 12px;
+        border-radius: 16px;
+        margin-top: 6px;
+    }
+    
+    .distance-text {
+        font-size: 0.8rem;
     }
     
     .location-badge {
-        font-size: 0.8rem;
-        padding: 4px 8px;
+        font-size: 0.75rem;
+        padding: 4px 10px;
+        white-space: nowrap; /* Prevent badge text wrapping */
+    }
+    
+    .station-info {
+        gap: 6px; /* Tighter spacing on mobile */
     }
 }
 
@@ -829,5 +863,32 @@ footer a:hover {
     
     .train-details {
         font-size: 0.85rem;
+    }
+    
+    .current-location-card {
+        padding: 12px;
+        margin: 0 -8px;
+    }
+    
+    .station-display {
+        font-size: 1rem;
+        line-height: 1.3;
+        /* Handle very long station names */
+        overflow-wrap: break-word;
+        hyphens: auto;
+    }
+    
+    .location-badge {
+        font-size: 0.7rem;
+        padding: 3px 8px;
+    }
+    
+    .distance-info {
+        padding: 5px 10px;
+        margin-top: 4px;
+    }
+    
+    .distance-text {
+        font-size: 0.75rem;
     }
 }
