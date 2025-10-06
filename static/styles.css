@@ -658,12 +658,48 @@ footer a:hover {
         margin-right: 8px;
     }
     
+    /* Special handling for status column */
+    .status-cell {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
+    
+    .status-cell::before {
+        margin-bottom: 4px;
+    }
+    
+    .status-cell .status {
+        margin-bottom: 2px;
+    }
+    
+    .status-cell small {
+        display: block;
+        line-height: 1.2;
+        margin-top: 2px;
+    }
+    
     .station-code::before { content: "Code"; }
     .station-name::before { content: "Station"; }
     .scheduled-time::before { content: "Scheduled"; }
     .actual-time-cell::before { content: "Actual"; }
     .platform::before { content: "Platform"; }
     .status-cell::before { content: "Status"; }
+    
+    /* Enhanced mobile delay display */
+    .delay-late {
+        color: #dc3545 !important;
+        font-weight: 600;
+    }
+    
+    .delay-early {
+        color: #28a745 !important;
+        font-weight: 600;
+    }
+    
+    .delay-ontime {
+        color: #28a745 !important;
+        font-weight: 600;
+    }
     
     /* Mobile-specific improvements */
     input[type="text"],
