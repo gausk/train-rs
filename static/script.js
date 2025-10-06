@@ -117,7 +117,7 @@ function displayResults(data) {
                         <div class="station-info">
                             <div class="station-line">
                                 <span class="station-display">
-                                    ${currentLoc.status} ${currentLoc.stationName ? 
+                                    ${formatStatus(currentLoc.status)} ${currentLoc.stationName ? 
                                         `${currentLoc.stationName} (${currentLoc.stationCode})` : 
                                         currentLoc.stationCode
                                     }
@@ -404,6 +404,28 @@ function getStatusText(status, index, totalStations) {
             return 'SCHEDULED';
         default:
             return 'NO DATA';
+    }
+}
+
+function formatStatus(status) {
+    if (!status) return '';
+    
+    switch (status.toUpperCase()) {
+        case 'AT_STATION':
+            return 'At Station';
+        case 'DEPARTED':
+            return 'Departed from';
+        case 'ARRIVED':
+            return 'Arrived at';
+        case 'RUNNING':
+            return 'Running towards';
+        case 'APPROACHING':
+            return 'Approaching';
+        default:
+            // Clean up underscores and capitalize first letter
+            return status.split('_')
+                         .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                         .join(' ');
     }
 }
 
