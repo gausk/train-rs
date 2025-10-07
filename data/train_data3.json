@@ -6054,7 +6054,6 @@
           "scheduledArrival": 1759617120,
           "scheduledDeparture": 1759617300,
           "actualArrival": 1759617180,
-          "actualDeparture": 1759617480,
           "delayArrivalMinutes": 1,
           "delayDepartureMinutes": 3,
           "platform": "1",

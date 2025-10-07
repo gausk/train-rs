@@ -115,13 +115,31 @@ pub struct LiveRouteInfo {
     pub status: LiveStatus,
 }
 
+struct LiveRouteInfoList(Vec<LiveRouteInfo>);
+
+impl LiveRouteInfoList {
+    pub fn update_status(&mut self, curr_time: u64) {
+        let mut prev_status = &LiveStatus::Upcoming;
+        self.0.iter_mut().rev().for_each(|r| {
+            r.update_status(curr_time, prev_status);
+            prev_status = &r.status;
+        });
+    }
+
+    pub fn inner(self) -> Vec<LiveRouteInfo> {
+        self.0
+    }
+}
+
 impl LiveRouteInfo {
     pub fn update_station_name(&mut self, map: &HashMap<String, String>) {
         self.station.name = map.get(&self.station.code).cloned();
     }
 
-    pub fn update_status(&mut self, curr_time: u64) {
-        if self.actual_departure.is_some_and(|t| t < curr_time) {
+    pub fn update_status(&mut self, curr_time: u64, previous_status: &LiveStatus) {
+        if let LiveStatus::Departed | LiveStatus::Arrived = previous_status {
+            self.status = LiveStatus::Departed;
+        } else if self.actual_departure.is_some_and(|t| t < curr_time) {
             self.status = LiveStatus::Departed
         } else if self.actual_arrival.is_some_and(|t| t <= curr_time) {
             self.status = LiveStatus::Arrived
@@ -131,7 +149,7 @@ impl LiveRouteInfo {
     }
 }
 
-#[derive(Debug, Clone, Default, Deserialize, Serialize)]
+#[derive(Debug, Clone, Copy, Default, Deserialize, Serialize)]
 pub enum LiveStatus {
     Departed,
     #[default]
@@ -225,8 +243,10 @@ impl From<TrainStatusData> for TrainLiveStatus {
             live_data.current_location.update_station_name(&map);
             live_data.route.iter_mut().for_each(|route| {
                 route.update_station_name(&map);
-                route.update_status(now);
             });
+            let mut lr = LiveRouteInfoList(live_data.route);
+            lr.update_status(now);
+            live_data.route = lr.inner();
             live_data
         });
         Self {
