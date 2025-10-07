@@ -22,7 +22,9 @@ pub async fn get_train_status(params: TrainStatusQuery) -> Result<TrainStatusRes
     let api_key = std::env::var("RAIL_RADAR_API_KEY").unwrap();
     let response = client.get(&url).header("X-Api-Key", api_key).send().await?;
     let txt = response.text().await?;
-    let train_resp: TrainStatusResponse = serde_json::from_str(&txt)?;
+    let train_resp: TrainStatusResponse = serde_json::from_str(&txt).inspect_err(|e| {
+        error!("Response from railradar API: {txt}, error: {e}");
+    })?;
     Ok(train_resp.into())
 }
 
