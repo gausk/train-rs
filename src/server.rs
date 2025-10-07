@@ -18,9 +18,21 @@ pub async fn get_train_status(params: TrainStatusQuery) -> Result<TrainStatusRes
         "https://railradar.in/api/v1/trains/{}?journeyDate={}",
         params.train_number, params.journey_date
     );
-    let client = Client::new();
-    let api_key = std::env::var("RAIL_RADAR_API_KEY").unwrap();
-    let response = client.get(&url).header("X-Api-Key", api_key).send().await?;
+    let client = Client::builder().cookie_store(true).build()?;
+    let api_key = std::env::var("RAIL_RADAR_API_KEY")
+        .map_err(|_| Error::msg("missing RAIL_RADAR_API_KEY env variable"))?;
+    let response = client
+        .get(&url)
+        .header("X-Api-Key", api_key)
+        .header(
+            "User-Agent",
+            "Mozilla/5.0 (compatible; RailRadarClient/1.0; +https://railradar.in)",
+        )
+        .header("Accept", "application/json")
+        .header("Accept-Language", "en-US,en;q=0.9")
+        .header("Referer", "https://railradar.in/")
+        .send()
+        .await?;
     let txt = response.text().await?;
     let train_resp: TrainStatusResponse = serde_json::from_str(&txt).inspect_err(|e| {
         error!("Response from railradar API: {txt}, error: {e}");
